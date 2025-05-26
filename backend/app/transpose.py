@@ -18,30 +18,23 @@ def save_as_pdf_and_png(score, filename_base):
     pdf_path = f"{filename_base}.pdf"
     png_path = f"{filename_base}.png"
 
-    print(f"Сохраняю как PDF: {pdf_path}")
     score.write('musicxml.pdf', fp=pdf_path)
 
-    print(f"Конвертирую PDF в PNG: {png_path}")
     images = convert_from_path(pdf_path)
     if images:
         images[0].save(png_path, 'PNG')
-        print(f"PNG сохранён: {png_path}")
         return png_path, pdf_path
     else:
         print("Ошибка при конвертации PDF в PNG")
 
 def load_from_image_via_audiveris(image_path, output_folder="output_xml"):
     """Распознать ноты с изображения с помощью Audiveris.exe и вернуть объект score."""
-    print("Запуск Audiveris (EXE)...")
     result = subprocess.run([
     r"M:\Programs\Audiveris\Audiveris.exe",
     "-batch", "-export",
     "-output", output_folder,
     image_path
 ], capture_output=True, text=True)
-
-    print("STDOUT:", result.stdout)
-    print("STDERR:", result.stderr)
 
     if result.returncode != 0:
         raise RuntimeError("Ошибка при запуске Audiveris.exe")
@@ -77,19 +70,12 @@ def transpose_file(filepath, uid, semitones, results_folder='results'):
     filename_base = os.path.join(results_folder, uid)
     print("Hello!")
     if ext in ['.mid', '.midi', '.xml', '.musicxml']:
-        print("Hello1")
         score = converter.parse(filepath)
-        print("KOBENI12")
         transposed = score.transpose(semitones)
-        print("KOBENI1")
-        png_path, pdf_path = save_as_pdf_and_png(transposed, filename_base)
-        print("KOBENI", png_path, pdf_path)
-        return png_path, pdf_path
+        return save_as_pdf_and_png(transposed, filename_base)
 
     elif ext in ['.png', '.jpg', '.jpeg']:
-        print("Hello2")
         score = load_from_image_via_audiveris(filepath)
-        print("hello3")
         return process_png_file(filepath, uid, semitones, results_folder)
 
     else:

@@ -65,6 +65,9 @@ def transpose_file_route():
     user_id = int(get_jwt_identity())
     user = User.query.get(user_id)
 
+    if not check_usage_limit(user):
+        return jsonify({"msg": "Usage limit exceeded for your plan"}), 429
+
     if 'file' not in request.files:
         return jsonify({'msg': 'No file part'}), 400
 
@@ -87,7 +90,6 @@ def transpose_file_route():
 
     try:
         if ext in ['.mid', '.midi', '.xml', '.musicxml', '.png', '.jpg', '.jpeg']:
-            print("MAKIMA")
             png_path, pdf_path = transpose_file(upload_path, uid, semitones, current_app.config['RESULT_FOLDER'])
             print("HIMENO")
         else:
