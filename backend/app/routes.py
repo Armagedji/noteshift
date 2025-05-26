@@ -17,14 +17,6 @@ def me():
     user = User.query.get(user_id)
     return jsonify({"username": user.username, "plan": user.plan})
 
-@routes_bp.route('/register', methods=['GET'])
-def register_page():
-    return render_template('register.html')
-
-@routes_bp.route('/login', methods=['GET'])
-def login_page():
-    return render_template('login.html')
-
 @routes_bp.route('/api/transpose', methods=['POST'])
 @jwt_required()
 def transpose():
