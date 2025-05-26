@@ -1,0 +1,51 @@
+.Home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  outline: solid;
+  outline-width: 1px;
+  outline-color: grey;
+  padding: 16px;
+
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.Home-body {
+  text-align: center;
+  background: #ececec;
+  border-bottom: 1px solid grey;
+  padding: 16px;
+  flex-grow: 1;
+}
+
+.Home-tile {
+  width: 900px;
+  height: 200px;
+  background-image: 
+    repeating-conic-gradient(#676767 0% 25%, #3f3f3f 0% 50%);
+  background-size: 80px 80px;
+}
+
+.Home-tile-button {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  margin-top: 50px;
+  margin-bottom: 10px;
+  font-size: 36px !important;
+  width: 300px;
+}
+
+.Home-footer {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  background: #656565;
+
+}
