@@ -6,7 +6,7 @@ from .models import User, TransposeHistory, db, PLAN_LIMITS
 import uuid
 import os
 from .utils import check_usage_limit
-from app.transposes.midi_transpose import transpose_midi_file
+from .transpose import transpose_file
 
 routes_bp = Blueprint('routes', __name__)
 
@@ -59,9 +59,9 @@ def upgrade_plan():
     return jsonify({"msg": f"Upgraded to {user.plan}!"})
 
 
-@routes_bp.route('/api/transpose/midi', methods=['POST'])
+@routes_bp.route('/api/transpose/file', methods=['POST'])
 @jwt_required()
-def transpose_midi():
+def transpose_file_route():
     user_id = int(get_jwt_identity())
     user = User.query.get(user_id)
 
@@ -72,27 +72,39 @@ def transpose_midi():
     if file.filename == '':
         return jsonify({'msg': 'No selected file'}), 400
 
+    semitones = request.form.get('semitones', default='0')
+    try:
+        semitones = int(semitones)
+    except ValueError:
+        return jsonify({'msg': 'Invalid semitones value'}), 400
+
     filename = secure_filename(file.filename)
     uid = str(uuid.uuid4())
+    ext = os.path.splitext(filename)[1].lower()
 
     upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], f'{uid}_{filename}')
     file.save(upload_path)
 
     try:
-        png_path, pdf_path = transpose_midi_file(upload_path, uid, current_app.config['RESULT_FOLDER'])
+        if ext in ['.mid', '.midi', '.xml', '.musicxml', '.png', '.jpg', '.jpeg']:
+            print("MAKIMA")
+            png_path, pdf_path = transpose_file(upload_path, uid, semitones, current_app.config['RESULT_FOLDER'])
+            print("HIMENO")
+        else:
+            return jsonify({'msg': f'Unsupported file type: {ext}'}), 400
     except Exception as e:
-        return jsonify({'msg': f'Failed to transpose: {str(e)}'}), 500
+        return jsonify({'msg': f'Failed to process file: {str(e)}'}), 500
 
-
-    # === Обновляем историю пользователя ===
+    # Обновляем историю пользователя
     user.usage_today += 1
     db.session.commit()
 
-    # === Возврат ответа ===
+    # Возвращаем пути
     return jsonify({
         'png_url': f'/api/transpose/image/{uid}',
         'pdf_url': f'/api/transpose/pdf/{uid}'
     })
+
 
 @routes_bp.route('/api/transpose/image/<uid>')
 @jwt_required()
