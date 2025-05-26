@@ -12,23 +12,6 @@ environment.set('musescoreDirectPNGPath', r'C:\Program Files\MuseScore 4\bin\Mus
 from music21 import stream, note, chord
 
 
-def normalize_voices(score):
-    # Создаем один поток голоса
-    voice = stream.Voice()
-
-    # Добавляем все ноты и аккорды в этот голос
-    for el in score.recurse():
-        if isinstance(el, note.Note) or isinstance(el, chord.Chord):
-            voice.append(el)
-
-    # Удаляем все ноты и аккорды из исходного score
-    for el in list(score.recurse().getElementsByClass(note.Note)) + list(
-            score.recurse().getElementsByClass(chord.Chord)):
-        el.activeSite.remove(el)
-
-    # Добавляем голос в score
-    score.append(voice)
-
 
 def save_as_pdf_and_png(score, filename_base):
     """Сохраняет партитуру в PDF и PNG"""
@@ -55,11 +38,11 @@ def load_from_musicxml(file_path):
     """Загрузить ноты из MusicXML"""
     return converter.parse(file_path)
 
-def load_from_image_via_audiveris(image_path, audiveris_exe_path, output_folder="output_xml"):
+def load_from_image_via_audiveris(image_path, output_folder="output_xml"):
     """Распознать ноты с изображения с помощью Audiveris.exe"""
     print("Запуск Audiveris (EXE)...")
     result = subprocess.run([
-        audiveris_exe_path,
+        "M:\Programs\Audiveris\Audiveris.exe",
         "-batch", "-export",
         "-output", output_folder,
         image_path
@@ -83,7 +66,6 @@ def transpose_score(score, semitones):
 
 def show_score(score):
     """Открывает партитуру"""
-    normalize_voices(score)
     score.show()
 
 def main():
@@ -103,17 +85,11 @@ def main():
 
     elif choice == "3":
         image_path = input("Путь к изображению с нотами (png/jpg): ")
-        audiveris_path = input("Путь к audiveris.jar: ")
-        score = load_from_image_via_audiveris(image_path, audiveris_path)
+        score = load_from_image_via_audiveris(image_path)
 
     else:
         print("Неверный выбор.")
         return
-
-    # Проверка, есть ли темп в партитуре
-    print("\n🎼 Проверка темпа в партитуре:")
-    for el in score.recurse().getElementsByClass('MetronomeMark'):
-        print(el)
 
     semitones = int(input("На сколько полутонов транспонировать (например -6): "))
     transposed = transpose_score(score, semitones)

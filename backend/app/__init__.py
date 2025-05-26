@@ -1,22 +1,28 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 from .config import Config
-from .extensions import db, migrate, security
-from .models import User, Role
-from flask_security import SQLAlchemyUserDatastore
+import os
+
+db = SQLAlchemy()
+jwt = JWTManager()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static', template_folder='templates')
     app.config.from_object(Config)
 
-    # Инициализация расширений
+    CORS(app)
     db.init_app(app)
-    migrate.init_app(app, db)
+    jwt.init_app(app)
 
-    user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-    security.init_app(app, user_datastore)
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    os.makedirs(app.config['RESULT_FOLDER'], exist_ok=True)
 
-    # Регистрируем роуты
-    from .routes import main_blueprint
-    app.register_blueprint(main_blueprint)
+    from .routes import routes_bp
+    from .auth import auth_bp
+
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(routes_bp)
 
     return app

@@ -1,32 +1,38 @@
 import os
-import time
-from music21 import converter, interval
+from music21 import converter, environment
+from pdf2image import convert_from_path
 
-def transpose_score(score, semitones):
-    if semitones == 0:
-        return score
-    i = interval.Interval(semitones)
-    return score.transpose(i)
+# Указать путь к MuseScore
+environment.set('musicxmlPath', r'C:\Program Files\MuseScore 4\bin\MuseScore4.exe')
+environment.set('musescoreDirectPNGPath', r'C:\Program Files\MuseScore 4\bin\MuseScore4.exe')
 
-def process_midi(midi_path, semitones, working_dir):
-    os.makedirs(working_dir, exist_ok=True)
-    score = converter.parse(midi_path)
-    score = transpose_score(score, semitones)
 
-    timestamp = int(time.time())
-    base_name = f'transposed_{timestamp}'
+def save_as_pdf_and_png(score, filename_base):
+    """Сохраняет партитуру в PDF и PNG"""
+    pdf_path = f"{filename_base}.pdf"
+    png_path = f"{filename_base}.png"
 
-    musicxml_out = os.path.join(working_dir, base_name + '.musicxml')
-    midi_out = os.path.join(working_dir, base_name + '.mid')
-    png_out = os.path.join(working_dir, base_name + '.png')
+    # Сохранить как PDF с помощью MuseScore
+    score.write('musicxml.pdf', fp=pdf_path)
 
-    score.write('musicxml', fp=musicxml_out)
-    score.write('midi', fp=midi_out)
+    # Конвертация первой страницы PDF → PNG
+    images = convert_from_path(pdf_path)
+    if images:
+        images[0].save(png_path, 'PNG')
+    else:
+        print("Ошибка при конвертации PDF в PNG")
 
-    try:
-        score.write('musicxml.png', fp=png_out)
-    except Exception as e:
-        print(f"Ошибка создания PNG: {e}")
-        png_out = None
+    return png_path, pdf_path
 
-    return score, musicxml_out, midi_out, png_out
+
+def transpose_midi_file(filepath, uid, results_folder='results'):
+    """Транспонирует MIDI, сохраняет PDF и PNG, возвращает пути"""
+    score = converter.parse(filepath)
+
+    semitones = -2  # можно заменить на пользовательское значение
+    transposed = score.transpose(semitones)
+
+    filename_base = os.path.join(results_folder, uid)
+    png_path, pdf_path = save_as_pdf_and_png(transposed, filename_base)
+
+    return png_path, pdf_path
