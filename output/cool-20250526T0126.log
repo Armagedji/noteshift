@@ -1,0 +1,55 @@
+2025-05-26 01:26:24,192 INFO [cool]                 Book.java:562  | 1 sheet in C:\Users\Arma\PycharmProjects\musicProject\uploads\cool.png
+2025-05-26 01:26:24,266 INFO []                 Book.java:2531 | Stored /book.xml
+2025-05-26 01:26:24,266 INFO []                 Book.java:2491 | Book stored as output\cool.omr
+2025-05-26 01:26:24,269 INFO []                 Book.java:1933 | Book reaching PAGE on sheets:[#1]
+2025-05-26 01:26:24,270 INFO [cool]       StepMonitoring.java:98   | LOAD
+2025-05-26 01:26:24,330 INFO [cool]            SheetStub.java:1268 | Loaded image #1 1653x2339 from C:\Users\Arma\PycharmProjects\musicProject\uploads\cool.png
+2025-05-26 01:26:24,339 INFO [cool]            ImageUtil.java:124  | Converting max RGB to gray
+2025-05-26 01:26:24,405 INFO [cool]       StepMonitoring.java:98   | BINARY
+2025-05-26 01:26:24,538 INFO [cool]       StepMonitoring.java:98   | SCALE
+2025-05-26 01:26:24,543 INFO [cool]         ScaleBuilder.java:241  | Beam  guessed height:  7 -- 0.50 of 14 interline
+2025-05-26 01:26:24,544 INFO [cool]         ScaleBuilder.java:264  | Beam measured height:  7 -- 0.30 of [4..14] range at 360% of needed quorum
+2025-05-26 01:26:24,545 INFO [cool]            ScaleStep.java:65   | Scale{ interline(13,14,14) line(1,1,3) beam(7)}
+2025-05-26 01:26:24,545 INFO [cool]       StepMonitoring.java:98   | GRID
+2025-05-26 01:26:24,628 INFO [cool]       LinesRetriever.java:1500 | Global slope: 0.00000
+2025-05-26 01:26:24,637 INFO [cool]    ClustersRetriever.java:328  | Retrieved raw line clusters: 1 of sizes [5] with interline(13,14,14)
+2025-05-26 01:26:24,654 INFO [cool]            PeakGraph.java:310  | Systems: #1[1]
+2025-05-26 01:26:24,721 INFO [cool]        SystemManager.java:779  | 1 part along 1 system
+2025-05-26 01:26:24,722 INFO [cool]                 Book.java:545  | Created scores: [{Score 1}]
+2025-05-26 01:26:24,722 INFO [cool]       StepMonitoring.java:98   | HEADERS
+2025-05-26 01:26:24,872 INFO [cool]      BasicClassifier.java:277  | Classifier loaded XML norms.
+2025-05-26 01:26:24,876 INFO [cool]   AbstractClassifier.java:396  | Classifier data loaded from default uri jar:file:/M:/Programs/Audiveris/app/audiveris.jar!/res/basic-classifier.zip
+2025-05-26 01:26:25,091 INFO [cool]       StepMonitoring.java:98   | STEM_SEEDS
+2025-05-26 01:26:25,107 INFO [cool]        StemSeedsStep.java:86   | stem(2 max:3)
+2025-05-26 01:26:25,120 INFO [cool]       StepMonitoring.java:98   | BEAMS
+2025-05-26 01:26:25,629 INFO [cool]       StepMonitoring.java:98   | LEDGERS
+2025-05-26 01:26:25,695 INFO [cool]       StepMonitoring.java:98   | HEADS
+2025-05-26 01:26:25,957 INFO [cool]        HeadSeedTally.java:235  | Scale information: HeadSeeds{NOTEHEAD_BLACK[L:0.4]}
+2025-05-26 01:26:25,958 INFO [cool]       StepMonitoring.java:98   | STEMS
+2025-05-26 01:26:26,054 INFO [cool]       StepMonitoring.java:98   | REDUCTION
+2025-05-26 01:26:26,078 INFO [cool]        ReductionStep.java:105  | Stems free length median value: 49 pixels, 3.5 interlines
+2025-05-26 01:26:26,079 INFO [cool]       StepMonitoring.java:98   | CUE_BEAMS
+2025-05-26 01:26:26,079 INFO [cool]         CueBeamsStep.java:81   | Step CUE_BEAMS is skipped because small heads switch is off
+2025-05-26 01:26:26,079 INFO [cool]       StepMonitoring.java:98   | TEXTS
+2025-05-26 01:26:26,350 INFO [cool]       StepMonitoring.java:98   | MEASURES
+2025-05-26 01:26:26,355 INFO [cool]                 Page.java:307  | 3 raw measures: [3 in system#1]
+2025-05-26 01:26:26,355 INFO [cool]       StepMonitoring.java:98   | CHORDS
+2025-05-26 01:26:26,359 INFO [cool]       StepMonitoring.java:98   | CURVES
+2025-05-26 01:26:26,526 INFO [cool]         SlursBuilder.java:240  | Slurs: 1
+2025-05-26 01:26:26,530 INFO [cool]      SegmentsBuilder.java:155  | Segments: 0
+2025-05-26 01:26:26,532 INFO [cool]       StepMonitoring.java:98   | SYMBOLS
+2025-05-26 01:26:26,571 INFO [cool]       StepMonitoring.java:98   | LINKS
+2025-05-26 01:26:26,586 INFO [cool]       StepMonitoring.java:98   | RHYTHMS
+2025-05-26 01:26:26,609 INFO [cool]       StepMonitoring.java:98   | PAGE
+2025-05-26 01:26:26,613 INFO [cool]                 Book.java:2550 | Book{cool} storing
+2025-05-26 01:26:26,629 INFO [cool]                 Book.java:2531 | Stored /book.xml
+2025-05-26 01:26:26,661 INFO [cool]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2025-05-26 01:26:26,790 INFO [cool]                Sheet.java:1562 | Stored /sheet#1/sheet#1.xml
+2025-05-26 01:26:26,790 INFO [cool]                 Book.java:2491 | Book stored as output\cool.omr
+2025-05-26 01:26:26,792 INFO [cool]            SheetStub.java:1644 | Disposed sheet
+2025-05-26 01:26:26,815 INFO [cool]                 Book.java:2018 | End of Stub#1 memory: 29,871,640
+2025-05-26 01:26:26,816 INFO [cool]                 Book.java:2025 | Book processed.
+2025-05-26 01:26:26,881 INFO [cool]            SheetStub.java:995  | Loaded /sheet#1/sheet#1.xml
+2025-05-26 01:26:27,097 INFO [cool]      PartwiseBuilder.java:2661 | Exporting sheet(s): [#1]
+2025-05-26 01:26:27,127 INFO [cool]        ScoreExporter.java:164  | Score cool exported to output\cool.mxl
+2025-05-26 01:26:27,144 INFO [cool]                Score.java:181  | Closing {Score 1}
