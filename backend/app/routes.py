@@ -21,9 +21,9 @@ def me():
 def register_page():
     return render_template('register.html')
 
-@routes_bp.route('/login', methods=['GET'])
-def login_page():
-    return render_template('login.html')
+#@routes_bp.route('/login', methods=['GET'])
+#def login_page():
+    #return render_template('login.html')
 
 @routes_bp.route('/api/transpose', methods=['POST'])
 @jwt_required()
@@ -62,6 +62,7 @@ def upgrade_plan():
 @routes_bp.route('/api/transpose/file', methods=['POST'])
 @jwt_required()
 def transpose_file_route():
+    print(request, request.files)
     user_id = int(get_jwt_identity())
     user = User.query.get(user_id)
 
@@ -91,10 +92,10 @@ def transpose_file_route():
     try:
         if ext in ['.mid', '.midi', '.xml', '.musicxml', '.png', '.jpg', '.jpeg']:
             png_path, pdf_path = transpose_file(upload_path, uid, semitones, current_app.config['RESULT_FOLDER'])
-            print("HIMENO")
         else:
             return jsonify({'msg': f'Unsupported file type: {ext}'}), 400
     except Exception as e:
+        print(e)
         return jsonify({'msg': f'Failed to process file: {str(e)}'}), 500
 
     # Обновляем историю пользователя

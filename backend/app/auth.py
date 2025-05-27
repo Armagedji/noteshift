@@ -19,7 +19,8 @@ def register():
     user = User(username=data['username'], password=hashed_pw)
     db.session.add(user)
     db.session.commit()
-    return jsonify({"msg": "User created"}), 201
+    token = create_access_token(identity=str(user.id))
+    return jsonify({"msg": "User created", "access_token": token}), 201
 
 @auth_bp.route('/login', methods=['POST'])
 def login():

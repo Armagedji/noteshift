@@ -72,6 +72,7 @@ def transpose_file(filepath, uid, semitones, results_folder='results'):
     if ext in ['.mid', '.midi', '.xml', '.musicxml']:
         score = converter.parse(filepath)
         transposed = score.transpose(semitones)
+        print(transposed, filename_base)
         return save_as_pdf_and_png(transposed, filename_base)
 
     elif ext in ['.png', '.jpg', '.jpeg']:
